@@ -1,0 +1,47 @@
+name: build
+on: 
+  push:
+    branches:
+      - master
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    name: Convert
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.0"
+          coverage: none
+
+      - name: Check environment
+        run: |
+          php --version
+          composer --version
+
+      - name: Get composer cache directory
+        id: composercache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composercache.outputs.dir }}
+          key: ${{ matrix.os }}-composer-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ matrix.os }}-composer-${{ matrix.php }}-
+
+      - name: Install dependencies
+        run: |
+          composer install --prefer-dist
+          composer require phabelio/phabel --prefer-dist
+
+      - name: Convert phabel
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "Github Actions"
+          php vendor/phabelio/phabel/tools/convertPhabel.php all
