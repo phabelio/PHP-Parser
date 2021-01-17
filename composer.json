@@ -14,7 +14,12 @@
     ],
     "require": {
         "php": ">=7.0",
-        "ext-tokenizer": "*"
+        "ext-tokenizer": "*",
+        "symfony/polyfill-php71": "*",
+        "symfony/polyfill-php72": "*",
+        "symfony/polyfill-php73": "*",
+        "symfony/polyfill-php74": "*",
+        "symfony/polyfill-php80": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5 || ^7.0 || ^8.0 || ^9.0",
