@@ -37,8 +37,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer install --prefer-dist
+          mv composer.json backup
           composer require phabel/phabel --prefer-dist --no-plugins
+          mv backup composer.json
 
       - name: Convert phabel
         run: |
