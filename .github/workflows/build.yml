@@ -38,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: |
           composer install --prefer-dist
-          composer require phabel/phabel --prefer-dist
+          composer require phabel/phabel --prefer-dist --no-plugins
 
       - name: Convert phabel
         run: |
