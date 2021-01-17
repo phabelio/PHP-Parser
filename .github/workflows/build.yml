@@ -38,10 +38,10 @@ jobs:
       - name: Install dependencies
         run: |
           composer install --prefer-dist
-          composer require phabelio/phabel --prefer-dist
+          composer require phabel/phabel --prefer-dist
 
       - name: Convert phabel
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "Github Actions"
-          php vendor/phabelio/phabel/tools/convertPhabel.php all
+          php vendor/phabel/phabel/tools/convertPhabel.php all
